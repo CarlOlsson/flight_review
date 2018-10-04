@@ -61,7 +61,7 @@ def get_heading_html(ulog, px4_ulog, db_data, link_to_3d_page):
     else:
         link_to_3d = ''
 
-    title_html = ("<table width='100%'><tr><td><h3>"+sys_name + px4_ulog.get_mav_type()+
+    title_html = ("<table width='100%'><tr><td><h3>"+str(ulog.initial_parameters['AIRCRAFT_ID']) + ' (v' + str(ulog.initial_parameters['SYS_HW_VER']) + ')' +
                   "</h3></td><td align='right'>" + link_to_3d+"</td></tr></table>")
     if db_data.description != '':
         title_html += "<h5>"+db_data.description+"</h5>"
@@ -254,7 +254,7 @@ SDLOG_UTC_OFFSET: {}'''.format(utctimestamp.strftime('%d-%m-%Y %H:%M'), utc_offs
             max_speed = np.amax(speed_vector)
             if vtol_states is None:
                 mean_speed = np.mean(speed_vector)
-                table_text_right.append(('Average Speed', "{:.1f} km/h".format(mean_speed*3.6)))
+                table_text_right.append(('Average Speed', "{:.1f} m/s".format(mean_speed))) # WINGTRA: display in m/s
             else:
                 local_pos_timestamp = local_pos.data['timestamp'][local_vel_valid_indices]
                 speed_vector = speed_vector.reshape((len(speed_vector),))
@@ -262,14 +262,14 @@ SDLOG_UTC_OFFSET: {}'''.format(utctimestamp.strftime('%d-%m-%Y %H:%M'), utc_offs
                     vtol_states, local_pos_timestamp, speed_vector)
                 if mean_speed_mc is not None:
                     table_text_right.append(
-                        ('Average Speed MC', "{:.1f} km/h".format(mean_speed_mc*3.6)))
+                        ('Average Speed MC', "{:.1f} m/s".format(mean_speed_mc))) # WINGTRA: display in m/s
                 if mean_speed_fw is not None:
                     table_text_right.append(
-                        ('Average Speed FW', "{:.1f} km/h".format(mean_speed_fw*3.6)))
-            table_text_right.append(('Max Speed', "{:.1f} km/h".format(max_speed*3.6)))
-            table_text_right.append(('Max Speed Horizontal', "{:.1f} km/h".format(max_h_speed*3.6)))
-            table_text_right.append(('Max Speed Up', "{:.1f} km/h".format(np.amax(-vel_z)*3.6)))
-            table_text_right.append(('Max Speed Down', "{:.1f} km/h".format(-np.amin(-vel_z)*3.6)))
+                        ('Average Speed FW', "{:.1f} m/s".format(mean_speed_fw))) # WINGTRA: display in m/s
+            table_text_right.append(('Max Speed', "{:.1f} m/s".format(max_speed))) # WINGTRA: display in m/s
+            table_text_right.append(('Max Speed Horizontal', "{:.1f} m/s".format(max_h_speed))) # WINGTRA: display in m/s
+            table_text_right.append(('Max Speed Up', "{:.1f} m/s".format(np.amax(-vel_z)))) # WINGTRA: display in m/s
+            table_text_right.append(('Max Speed Down', "{:.1f} m/s".format(-np.amin(-vel_z)))) # WINGTRA: display in m/s
 
             table_text_right.append(('', '')) # spacing
 
