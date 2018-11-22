@@ -158,15 +158,19 @@ def generate_plots(ulog, px4_ulog, db_data, vehicle_data, link_to_3d_page):
 
 
     # Altitude estimate
+    # WINGTRA: adapt plot
     data_plot = DataPlot(data, plot_config, 'vehicle_gps_position',
                          y_axis_label='[m]', title='Altitude Estimate',
                          changed_params=changed_params, x_range=x_range)
     data_plot.add_graph([lambda data: ('alt', data['alt']*0.001)],
-                        colors8[0:1], ['GPS Altitude'])
+                        colors8[0:1], ['Cruise GPS Altitude'])
+    data_plot.change_dataset('vehicle_gps_position', 1)
+    data_plot.add_graph([lambda data: ('alt', data['alt']*0.001)],
+                        colors8[0:1], ['Hover GPS Altitude'])
     data_plot.change_dataset(baro_alt_meter_topic)
     data_plot.add_graph(['baro_alt_meter'], colors8[1:2], ['Barometer Altitude'])
     data_plot.change_dataset('vehicle_global_position')
-    data_plot.add_graph(['alt'], colors8[2:3], ['Fused Altitude Estimation'])
+    data_plot.add_graph(['alt'], colors8[2:3], ['Estimated Altitude'])
     data_plot.change_dataset('position_setpoint_triplet')
     data_plot.add_circle(['current.alt'], [plot_config['mission_setpoint_color']],
                          ['Altitude Setpoint'])
