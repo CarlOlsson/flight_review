@@ -77,13 +77,14 @@ def get_info_table_html(ulog, px4_ulog, db_data, vehicle_data, vtol_states):
     table_text_left = []
 
     # airframe
-    airframe_name_tuple = get_airframe_name(ulog, True)
-    if airframe_name_tuple is not None:
-        airframe_name, airframe_id = airframe_name_tuple
-        if len(airframe_name) == 0:
-            table_text_left.append(('Airframe', airframe_id))
-        else:
-            table_text_left.append(('Airframe', airframe_name+' <small>('+airframe_id+')</small>'))
+    # WINGTRA: Comment out
+    # airframe_name_tuple = get_airframe_name(ulog, True)
+    # if airframe_name_tuple is not None:
+    #     airframe_name, airframe_id = airframe_name_tuple
+    #     if len(airframe_name) == 0:
+    #         table_text_left.append(('Airframe', airframe_id))
+    #     else:
+    #         table_text_left.append(('Airframe', airframe_name+' <small>('+airframe_id+')</small>'))
 
 
     # HW & SW
@@ -117,7 +118,8 @@ def get_info_table_html(ulog, px4_ulog, db_data, vehicle_data, vtol_states):
         if os_ver is not None:
             table_text_left.append(('OS Version', os_name + ', ' + os_ver))
 
-    table_text_left.append(('Estimator', px4_ulog.get_estimator()))
+    # WINGTRA: Comment out
+    # table_text_left.append(('Estimator', px4_ulog.get_estimator()))
 
     table_text_left.append(('', '')) # spacing
 
