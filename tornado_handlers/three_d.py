@@ -163,6 +163,13 @@ class ThreeDHandler(TornadoRequestHandlerBase):
             # TODO: use the delta-quad model
             model_scale_factor = 0.06
             model_uri = 'plot_app/static/cesium/SampleData/models/CesiumAir/Cesium_Air.glb'
+        elif mav_type == 19: # WINGTRA
+            model_scale_factor = 0.04
+            model_uri = 'plot_app/static/cesium/SampleData/models/CesiumAir/Cesium_Air.glb'
+            # model_scale_factor = 0.1
+            # model_uri = 'plot_app/static/cesium/models/wingtra/S125B.glb'
+            # model_scale_factor = 1
+            # model_uri = 'plot_app/static/cesium/models/wingtra/pacflyer_s124C_mockup.glb'
         else: # TODO: handle more types
             model_scale_factor = 1
             model_uri = 'plot_app/static/cesium/models/iris/iris.glb'

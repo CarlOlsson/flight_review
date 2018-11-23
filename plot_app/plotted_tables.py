@@ -88,12 +88,13 @@ def get_info_table_html(ulog, px4_ulog, db_data, vehicle_data, vtol_states):
 
 
     # HW & SW
-    sys_hardware = ''
-    if 'ver_hw' in ulog.msg_info_dict:
-        sys_hardware = escape(ulog.msg_info_dict['ver_hw'])
-        if 'ver_hw_subtype' in ulog.msg_info_dict:
-            sys_hardware += ' (' + escape(ulog.msg_info_dict['ver_hw_subtype']) + ')'
-        table_text_left.append(('Hardware', sys_hardware))
+    # WINGTRA: Comment out
+    # sys_hardware = ''
+    # if 'ver_hw' in ulog.msg_info_dict:
+    #     sys_hardware = escape(ulog.msg_info_dict['ver_hw'])
+    #     if 'ver_hw_subtype' in ulog.msg_info_dict:
+    #         sys_hardware += ' (' + escape(ulog.msg_info_dict['ver_hw_subtype']) + ')'
+    #     table_text_left.append(('Hardware', sys_hardware))
 
     release_str = ulog.get_version_info_str()
     if release_str is None:
@@ -112,13 +113,13 @@ def get_info_table_html(ulog, px4_ulog, db_data, vehicle_data, vtol_states):
                                 '<a href="'+ver_sw_link+'" target="_blank">'+ver_sw[:8]+'</a>'+
                                 release_str_suffix+branch_info))
 
-    if 'sys_os_name' in ulog.msg_info_dict and 'sys_os_ver_release' in ulog.msg_info_dict:
-        os_name = escape(ulog.msg_info_dict['sys_os_name'])
-        os_ver = ulog.get_version_info_str('sys_os_ver_release')
-        if os_ver is not None:
-            table_text_left.append(('OS Version', os_name + ', ' + os_ver))
-
     # WINGTRA: Comment out
+    # if 'sys_os_name' in ulog.msg_info_dict and 'sys_os_ver_release' in ulog.msg_info_dict:
+    #     os_name = escape(ulog.msg_info_dict['sys_os_name'])
+    #     os_ver = ulog.get_version_info_str('sys_os_ver_release')
+    #     if os_ver is not None:
+    #         table_text_left.append(('OS Version', os_name + ', ' + os_ver))
+
     # table_text_left.append(('Estimator', px4_ulog.get_estimator()))
 
     table_text_left.append(('', '')) # spacing
@@ -188,12 +189,13 @@ SDLOG_UTC_OFFSET: {}'''.format(utctimestamp.strftime('%d-%m-%Y %H:%M'), utc_offs
     table_text_left.append(('', '')) # spacing
 
     # vehicle UUID (and name if provided). SITL does not have a UUID
-    if 'sys_uuid' in ulog.msg_info_dict and sys_hardware != 'SITL':
-        sys_uuid = escape(ulog.msg_info_dict['sys_uuid'])
-        if vehicle_data is not None and vehicle_data.name != '':
-            sys_uuid = sys_uuid + ' (' + vehicle_data.name + ')'
-        if len(sys_uuid) > 0:
-            table_text_left.append(('Vehicle UUID', sys_uuid))
+    # WINGTRA: Comment out
+    # if 'sys_uuid' in ulog.msg_info_dict and sys_hardware != 'SITL':
+    #     sys_uuid = escape(ulog.msg_info_dict['sys_uuid'])
+    #     if vehicle_data is not None and vehicle_data.name != '':
+    #         sys_uuid = sys_uuid + ' (' + vehicle_data.name + ')'
+    #     if len(sys_uuid) > 0:
+    #         table_text_left.append(('Vehicle UUID', sys_uuid))
 
 
     table_text_left.append(('', '')) # spacing
@@ -278,22 +280,23 @@ SDLOG_UTC_OFFSET: {}'''.format(utctimestamp.strftime('%d-%m-%Y %H:%M'), utc_offs
         vehicle_attitude = ulog.get_dataset('vehicle_attitude')
         roll = vehicle_attitude.data['roll']
         pitch = vehicle_attitude.data['pitch']
-        if len(roll) > 0:
-            # tilt = angle between [0,0,1] and [0,0,1] rotated by roll and pitch
-            tilt_angle = np.arccos(np.multiply(np.cos(pitch), np.cos(roll)))*180/np.pi
-            table_text_right.append(('Max Tilt Angle', "{:.1f} deg".format(np.amax(tilt_angle))))
+        # WINGTRA: Comment out
+        # if len(roll) > 0:
+        #     # tilt = angle between [0,0,1] and [0,0,1] rotated by roll and pitch
+        #     tilt_angle = np.arccos(np.multiply(np.cos(pitch), np.cos(roll)))*180/np.pi
+        #     table_text_right.append(('Max Tilt Angle', "{:.1f} deg".format(np.amax(tilt_angle))))
 
-        rollspeed = vehicle_attitude.data['rollspeed']
-        pitchspeed = vehicle_attitude.data['pitchspeed']
-        yawspeed = vehicle_attitude.data['yawspeed']
-        if len(rollspeed) > 0:
-            max_rot_speed = np.amax(np.sqrt(np.square(rollspeed) +
-                                            np.square(pitchspeed) +
-                                            np.square(yawspeed)))
-            table_text_right.append(('Max Rotation Speed', "{:.1f} deg/s".format(
-                max_rot_speed*180/np.pi)))
+        # rollspeed = vehicle_attitude.data['rollspeed']
+        # pitchspeed = vehicle_attitude.data['pitchspeed']
+        # yawspeed = vehicle_attitude.data['yawspeed']
+        # if len(rollspeed) > 0:
+        #     max_rot_speed = np.amax(np.sqrt(np.square(rollspeed) +
+        #                                     np.square(pitchspeed) +
+        #                                     np.square(yawspeed)))
+        #     table_text_right.append(('Max Rotation Speed', "{:.1f} deg/s".format(
+        #         max_rot_speed*180/np.pi)))
 
-        table_text_right.append(('', '')) # spacing
+        # table_text_right.append(('', '')) # spacing
 
         battery_status = ulog.get_dataset('battery_status')
         battery_current = battery_status.data['current_a']
